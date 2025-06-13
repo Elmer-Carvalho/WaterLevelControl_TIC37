@@ -25,7 +25,7 @@ include(pico_sdk_import.cmake)
 project(Teste_ldr C CXX ASM) 
 pico_sdk_init()
 add_executable(${PROJECT_NAME}  
-        Ilumina01.c  # Código principal em C para o LDR
+        main.c  # Código principal em C para o LDR
         lib/ssd1306.c # Biblioteca para o display OLED
         )
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
