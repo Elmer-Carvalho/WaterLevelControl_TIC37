@@ -12,8 +12,8 @@ extern volatile float lim_max;
 extern volatile float nivel_percentual;
 extern volatile bool bomba_ligada;
 
-#define WIFI_SSID "WIFI_SSID"
-#define WIFI_PASS "WIFI_PASSWORD"
+#define WIFI_SSID "Sua Rede"
+#define WIFI_PASS "Sua senha"
 
 // Conteúdo da página HTML
 const char HTML_BODY[] =
