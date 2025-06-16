@@ -61,7 +61,7 @@ int main() {
   gpio_put(RELAY_PIN, 1); 
 
   // Conexão Wi-Fi e servidor 
-  ssd1306_draw_string(&ssd, "Conectando WiFi...", 8, 22);
+  ssd1306_draw_string(&ssd, "Conectando WiFi", 6, 22);
   ssd1306_send_data(&ssd);
 
   if (!webserver_init()) {
