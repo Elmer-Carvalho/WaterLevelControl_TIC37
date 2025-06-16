@@ -27,6 +27,7 @@ pico_sdk_init()
 add_executable(${PROJECT_NAME}  
         main.c  # Código principal em C para o LDR
         lib/ssd1306.c # Biblioteca para o display OLED
+        lib/webserver.c
         )
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
         PICO_PRINTF_SUPPORT_FLOAT=1 
