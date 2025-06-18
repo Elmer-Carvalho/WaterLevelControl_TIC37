@@ -27,6 +27,7 @@ pico_sdk_init()
 add_executable(${PROJECT_NAME}  
         main.c  # Código principal em C para o LDR
         lib/ssd1306.c # Biblioteca para o display OLED
+        lib/webserver.c
         )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib)
@@ -42,7 +43,10 @@ target_link_libraries(${PROJECT_NAME}
         hardware_adc
         hardware_pwm
         hardware_pio
+        pico_cyw43_arch_lwip_threadsafe_background
         )
+
+target_include_directories(Teste_ldr PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 pico_enable_stdio_usb(${PROJECT_NAME} 1)
 pico_enable_stdio_uart(${PROJECT_NAME} 0)
 
