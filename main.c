@@ -1,6 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
+#include "pico/bootrom.h"
+#include "hardware/gpio.h"
+#include "hardware/i2c.h"
+#include "hardware/adc.h"
+#include "hardware/pwm.h"
+#include "hardware/pio.h"
+#include "hardware/clocks.h"
+#include "lib/ssd1306.h"
 #include "lib/font.h"
 #include "ws2812.pio.h"
-#include "pico/cyw43_arch.h" 
 #include "lib/webserver.h" 
 
 // ===== DEFINIÇÕES DE HARDWARE =====
