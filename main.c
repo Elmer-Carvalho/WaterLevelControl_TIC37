@@ -29,9 +29,14 @@
 #define NUM_LEDS 25
 
 // ===== CONSTANTES DO SISTEMA =====
-#define LIM_MIN_PADRAO 30.0
-#define LIM_MAX_PADRAO 70.0
+#define LIM_MIN_PADRAO 30.0f
+#define LIM_MAX_PADRAO 70.0f
 #define DEBOUNCE_TIME 200
+#define VOLUME_MAX 7.8f
+#define VOLUME_MIN 1.5f
+#define LEITURA_ADC_MIN 2680f
+#define LEITURA_ADC_MAX 2040f
+
 
 // ===== VARIÁVEIS GLOBAIS =====
 volatile float lim_min = LIM_MIN_PADRAO;
@@ -181,8 +186,8 @@ uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b) {
  */
 void atualiza_matriz(float nivel_percentual) {
     uint32_t frame[NUM_LEDS] = {0};  // Buffer com 25 LEDs apagados
-    uint32_t cor_azul = urgb_u32(0, 0, 255);
-    uint32_t cor_vermelha = urgb_u32(255, 0, 0);
+    uint32_t cor_azul = urgb_u32(0, 0, 8);
+    uint32_t cor_vermelha = urgb_u32(8, 0, 0);
 
     // Define quais LEDs acender baseado no nível
     if (nivel_percentual >= 20.0 && nivel_percentual <= 30.0) {
@@ -288,6 +293,8 @@ void atualiza_display(ssd1306_t *ssd, uint16_t adc_value) {
 
 // ===== FUNÇÃO PRINCIPAL =====
 int main() {
+    uint16_t adc_value_x;    
+    float volume_atual = 0.0f;
     // Inicialização do hardware
     inicializar_hardware();
     
@@ -298,8 +305,8 @@ int main() {
     // Inicialização do servidor web
     inicializar_webserver(&ssd);
     
-    uint16_t adc_value_x;
-    
+    adc_select_input(2); 
+
     // Loop principal
     while (true) {
         // Poll do WiFi
@@ -313,9 +320,9 @@ int main() {
         }
 
         // Leitura do ADC e cálculo do nível percentual
-        adc_select_input(2); 
-        adc_value_x = adc_read(); 
-        nivel_percentual = (adc_value_x * 100.0) / 4095.0;
+        adc_value_x = adc_read();
+        volume_atual = 1.5f + (6.3f * ((float)(adc_value_x - 2680) / -640.0f));
+        nivel_percentual = ((volume_atual - 1.5f) / 6.3f) * 100;
 
         // Controle da bomba
         controla_bomba(nivel_percentual);
@@ -327,7 +334,7 @@ int main() {
         atualiza_matriz(nivel_percentual);
         
         // Controle do buzzer de alerta
-        alerta_buzzer(nivel_percentual);
+        //alerta_buzzer(nivel_percentual);
         
         sleep_ms(500);
     }
